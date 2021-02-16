@@ -94,22 +94,47 @@ fs::dir_create(loc)
 -->
 ```{r data_dl, message=FALSE}
 ruODK::ru_setup(
+  svc="https://odkcentral.dbca.wa.gov.au/v1/projects/28/forms/build_Spotlighting-0-9_1584607517.svc",
+  tz = "Australia/Perth", # your local timezone
+  odkc_version = 0.7,     # your ODKC version, only needed if <=0.7
+  verbose = TRUE)
+data_old <- ruODK::odata_submission_get(local_dir = loc, wkt = TRUE)
+
+ruODK::ru_setup(
   svc="https://odkc.dbca.wa.gov.au/v1/projects/6/forms/Spotlighting.svc",
   tz = "Australia/Perth", # your local timezone
   odkc_version = 1.0,     # your ODKC version, only needed if <=0.7
   verbose = TRUE)
 
-data <- ruODK::odata_submission_get(local_dir = loc, wkt = TRUE)
+data <- ruODK::odata_submission_get(local_dir = loc, wkt = TRUE) %>% 
+  dplyr::bind_rows(data_old)
 
 ruODK::ru_setup(
-  svc="https://odkc.dbca.wa.gov.au/v1/projects/6/forms/Spotlighting-Survey-Start.svc"
+  svc="https://odkcentral.dbca.wa.gov.au/v1/projects/28/forms/build_Spotlighting-Survey-Start-0-5_1584607495.svc",
+  odkc_version = 0.7
 )
-survey_start <- ruODK::odata_submission_get(local_dir = loc, wkt = TRUE)
+survey_start_old <- ruODK::odata_submission_get(local_dir = loc, wkt = TRUE)
 
 ruODK::ru_setup(
-  svc="https://odkc.dbca.wa.gov.au/v1/projects/6/forms/Spotlighting-Survey-End.svc"
+  svc="https://odkc.dbca.wa.gov.au/v1/projects/6/forms/Spotlighting-Survey-Start.svc",
+  odkc_version = 1.0
 )
-survey_end <- ruODK::odata_submission_get(local_dir = loc, wkt = TRUE)
+survey_start <- ruODK::odata_submission_get(local_dir = loc, wkt = TRUE) %>% 
+  dplyr::bind_rows(survey_start_old)
+
+ruODK::ru_setup(
+  svc="https://odkcentral.dbca.wa.gov.au/v1/projects/28/forms/build_Spotlighting-Survey-End-0-4_1584607543.svc
+",
+  odkc_version = 0.7
+)
+survey_end_old <- ruODK::odata_submission_get(local_dir = loc, wkt = TRUE)
+
+ruODK::ru_setup(
+  svc="https://odkc.dbca.wa.gov.au/v1/projects/6/forms/Spotlighting-Survey-End.svc",
+  odkc_version = 1.0
+)
+survey_end <- ruODK::odata_submission_get(local_dir = loc, wkt = TRUE) %>% 
+  dplyr::bind_rows(survey_end_old)
 ```
 
 ## Data overview
