@@ -35,3 +35,6 @@ using ODK Build and post-processed by hand.
 The vignette “analysis” contains a working example of accessing and
 visualising the data. Data is exported by the analysis workbook as CSV
 to `inst/extdata/export`.
+
+The vignette can be run with valid credentials to the DBCA ODK Central
+server. This repository does not contain the actual data.
