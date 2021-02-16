@@ -1,7 +1,7 @@
 ---
 title: "Analysis"
 author: "DBCA Kingston Spotlighting"
-date: "`r Sys.Date()`"
+date: "`r Sys.time()`"
 output:
   html_document:
     toc: true
@@ -310,7 +310,7 @@ readr::write_csv(survey_end, path = "inst/extdata/export/survey_end.csv")
 #
 # Upload to a CKAN data catalogue (needs url and API key of a write permitted user)
 # See ROpenSci package ckanr
-ckanr::ckanr_setup(url = Sys.getenv("CKAN_URL"), key = Sys.getenv("CKAN_KEY"))
+ckanr::ckanr_setup(url = Sys.getenv("CKAN_URL"), key = Sys.getenv("CKAN_API_KEY"))
 # ckan_ds_name <- "my-ckan-dataset-slug"
 # 
 # # Run once to create resources on an existing dataset, then comment out
@@ -332,7 +332,7 @@ ckanr::ckanr_setup(url = Sys.getenv("CKAN_URL"), key = Sys.getenv("CKAN_KEY"))
 #   package_id = d$id, name="All data and attachments", upload = zip_fn)
 # }
 # # Paste res_data_main$id over RID and keep here, repeat for each resource
-# r <- ckanr::resource_update(res_data_main$id, path = data_fn)
+r <- ckanr::resource_update("89054b15-14fb-4d75-8c92-e49e9bcf2f8b", path = "analysis.html")
 # r <- ckanr::resource_update(res_data_sub1$id, path = data_sub1_fn)
 # r <- ckanr::resource_update(res_data_sub2$id, path = data_sub2_fn)
 # if (fs::file_exists(rep_fn)){
